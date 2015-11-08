@@ -9,7 +9,7 @@ var github = new GitHubApi({
 
 github.repos.getCommits({
   user: 'rumpl',
-  repo: 'naudio',
+  repo: 'stale-deps',
   per_page: 1
 }, function (err, res) {
   console.log(JSON.stringify(res, null, 2));
