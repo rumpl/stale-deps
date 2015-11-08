@@ -1,0 +1,17 @@
+{
+  "name": "stale-deps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": [
+    "Djordje Lukic <lukic.djordje@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.1.2",
+    "github": "^0.2.4"
+  }
+}
