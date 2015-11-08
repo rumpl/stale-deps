@@ -1,8 +1,11 @@
 {
   "name": "stale-deps",
   "version": "1.0.0",
-  "description": "",
+  "description": "Check the health of your dependencies",
   "main": "index.js",
+  "bin": {
+    "stale-deps": "bin/stale-deps"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
