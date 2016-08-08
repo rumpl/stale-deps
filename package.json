@@ -15,6 +15,6 @@
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.1.2",
-    "github": "^0.2.4"
+    "github": "^2.4.0"
   }
 }
