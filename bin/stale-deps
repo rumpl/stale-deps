@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
 const { Command } = require("@oclif/command");
-var path = require("path");
-var request = require("request");
-var Table = require("cli-table");
+const path = require("path");
+const request = require("request");
+const Table = require("cli-table");
 
 class PackageCheckCommand extends Command {
   async run() {
-    var filename = path.join(process.cwd(), "package.json");
-    var packageJson = require(filename);
-    var keys = Object.keys(packageJson.dependencies);
+    const filename = path.join(process.cwd(), "package.json");
+    const packageJson = require(filename);
+    const keys = Object.keys(packageJson.dependencies);
 
-    var log = this.log;
+    const log = this.log;
 
     request(
       {
@@ -24,7 +24,7 @@ class PackageCheckCommand extends Command {
           this.error("err", err);
           process.exit(1);
         } else {
-          var table = new Table({
+          const table = new Table({
             head: [
               "module",
               "final",
@@ -40,7 +40,7 @@ class PackageCheckCommand extends Command {
             ]
           });
 
-          var fail;
+          let fail;
           Object.keys(body).forEach(key => {
             const mod = body[key];
             fail =
