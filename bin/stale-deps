@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+const { Command } = require("@oclif/command");
+var path = require("path");
+var request = require("request");
+var Table = require("cli-table");
+
+class PackageCheckCommand extends Command {
+  async run() {
+    var filename = path.join(process.cwd(), "package.json");
+    var packageJson = require(filename);
+    var keys = Object.keys(packageJson.dependencies);
+
+    var log = this.log;
+
+    request(
+      {
+        method: "post",
+        url: "https://api.npms.io/v2/package/mget",
+        json: keys
+      },
+      function(err, _, body) {
+        if (err) {
+          this.error("err", err);
+          process.exit(1);
+        } else {
+          var table = new Table({
+            head: [
+              "module",
+              "final",
+              "matainers",
+              "license",
+              "hasTestScripts",
+              "downloads",
+              "deps",
+              "dependents",
+              "popularity",
+              "maintenance",
+              "fail"
+            ]
+          });
+
+          var fail;
+          Object.keys(body).forEach(key => {
+            const mod = body[key];
+            fail =
+              mod.score.final < 0.1 ||
+              !mod.collected.metadata.license ||
+              !mod.collected.metadata.hasTestScript;
+
+            table.push([
+              mod.collected.metadata.name +
+                "@" +
+                mod.collected.metadata.version || "unknown",
+              (mod.score.final * 10).toFixed(3),
+              mod.collected.metadata.maintainers.length > 1
+                ? mod.collected.metadata.maintainers.length
+                : "ONE!",
+              mod.collected.metadata.license || "",
+              mod.collected.metadata.hasTestScript || "MISSING",
+              mod.collected.npm.downloads[0].count || "NONE",
+              Object.keys(mod.collected.metadata.dependencies || []).length,
+              mod.collected.npm.dependentsCount || "0",
+              (mod.score.detail.popularity * 10).toFixed(3),
+              (mod.score.detail.maintenance * 10).toFixed(3),
+              fail ? "FAIL" : ""
+            ]);
+          });
+          log(table.toString());
+        }
+      }
+    );
+  }
+}
+
+PackageCheckCommand.description = "check package.json file";
+
+PackageCheckCommand.flags = {};
+
+PackageCheckCommand.run();

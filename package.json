@@ -1,20 +1,28 @@
 {
   "name": "stale-deps",
   "version": "1.0.0",
-  "description": "Check the health of your dependencies",
-  "main": "index.js",
-  "bin": {
-    "stale-deps": "bin/stale-deps"
+  "description": "Check the health of your dependencies.",
+  "main": "bin/stale-deps",
+  "directories": {
+    "lib": "lib"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": [
-    "Djordje Lukic <lukic.djordje@gmail.com>"
-  ],
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rumpl/stale-deps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rumpl/stale-deps/issues"
+  },
+  "homepage": "https://github.com/rumpl/stale-deps#readme",
   "dependencies": {
-    "babel-core": "^6.1.2",
-    "github": "^2.4.0"
+    "@oclif/command": "^1.5.19",
+    "cli-table": "^0.3.1",
+    "request": "^2.88.0"
   }
 }
